@@ -1,5 +1,6 @@
 
-import { Progress } from "@/components/ui/progress";
+import React from 'react';
+import InteractiveSkillBar from './InteractiveSkillBar';
 
 const SkillsShowcase = () => {
   const skills = [
@@ -12,13 +13,18 @@ const SkillsShowcase = () => {
   ];
 
   return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-6">
+    <section className="py-20 bg-white relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-100 to-purple-100"></div>
+      </div>
+      
+      <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 animate-fade-in">
             Technical Proficiency
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto animate-fade-in">
             Expertise levels across key technologies and methodologies
           </p>
         </div>
@@ -26,20 +32,13 @@ const SkillsShowcase = () => {
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {skills.map((skill, index) => (
-              <div 
+              <InteractiveSkillBar
                 key={skill.name}
-                className="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-all duration-300 animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">{skill.name}</h3>
-                  <span className="text-sm font-medium text-gray-600">{skill.level}%</span>
-                </div>
-                <Progress 
-                  value={skill.level} 
-                  className="h-3 bg-gray-200"
-                />
-              </div>
+                name={skill.name}
+                level={skill.level}
+                color={skill.color}
+                index={index}
+              />
             ))}
           </div>
         </div>
